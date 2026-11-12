@@ -1,0 +1,29 @@
+{
+  "file": "beijing_daily_full_weather_2025.json",
+  "timezone": "Asia/Shanghai, UTC+08:00, no daylight-saving time",
+  "coverage": {"start": "2025-01-01", "end": "2026-01-01", "days": 366},
+  "why_the_extra_day": "A sample late in a UTC day falls on the next Beijing calendar day, so 2026-01-01 is required.",
+  "requested_point": {"latitude_deg": 39.9, "longitude_deg": 116.41},
+  "ground_station": {"latitude_deg": 40.158936, "longitude_deg": 116.284731, "altitude_m": 387.0},
+  "distance_km": 30.7,
+  "daily_fields": {
+    "temp_mean_C": "daily mean air temperature at 2 m, deg C",
+    "temp_max_C": "daily maximum air temperature at 2 m, deg C",
+    "temp_min_C": "daily minimum air temperature at 2 m, deg C",
+    "rh_pct": "daily mean relative humidity at 2 m, percent",
+    "prec_mm": "daily total precipitation, mm",
+    "rain_mm": "daily liquid rain, mm; retained, not used by the link model",
+    "press_hPa": "daily mean surface pressure, hPa",
+    "wind_max_kmh": "daily maximum wind speed at 10 m, km/h"
+  },
+  "source_2025": "Previously stored daily values for the requested point. The forecast model and the original API response were not retained.",
+  "source_2026_01_01": {
+    "service": "Open-Meteo archive API",
+    "retrieved_at_utc": "2026-11-10T06:26:35Z",
+    "grid_latitude_deg": 39.89455,
+    "grid_longitude_deg": 116.35983,
+    "grid_elevation_m": 52.0,
+    "request_url": "https://archive-api.open-meteo.com/v1/archive?latitude=39.9&longitude=116.41&start_date=2026-01-01&end_date=2026-01-01&daily=temperature_2m_mean,temperature_2m_max,temperature_2m_min,relative_humidity_2m_mean,precipitation_sum,rain_sum,surface_pressure_mean,wind_speed_10m_max&timezone=Asia/Shanghai"
+  },
+  "pressure_note": "Surface pressure is the grid-point value. It is not reduced from the 52 m grid elevation to the 387 m station."
+}
