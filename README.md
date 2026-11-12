@@ -1,4 +1,4 @@
-GLOBAL-12 Downlink Simulation
+Downlink Simulation
 
 Run these commands from the project root with Python 3.10 or newer. The supplied TLE archive and daily weather data cover the 2025 simulation.
 
