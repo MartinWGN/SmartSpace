@@ -1,28 +1,65 @@
-Downlink Simulation
+# Downlink Simulation
 
-Run these commands from the project root with Python 3.10 or newer. The supplied TLE archive and daily weather data cover the 2025 simulation.
+## 1. Environment Setup
 
-Install the required Python packages first.
+Use Python 3.12. Install the required dependencies:
+
+```bash
 python -m pip install -r requirements.txt
+```
 
-Run the annual simulation, then generate the two figures from its saved results.
-python src/simulate.py
-python figures/plot.py
+## 2. Input Data
 
-Daily records, the daily table and summary statistics are saved in results/. The figures are saved in figures/ as daily_downlink_capacity.pdf and .png, and monthly_link_conditions.pdf and .png. The first shows daily effective capacity and its seven-day mean; the second shows monthly SNR, rain loss and free-space loss. Existing files with the same names are overwritten.
+Prepare the following UTF-8 JSON files in the `input/` directory:
 
-To inspect one UTC day, use the following command. It prints the record without saving files.
-python src/simulate.py --date 20250101
+| File | Description |
+|---|---|
+| `tle.json` | Satellite TLE records containing `EPOCH`, `TLE_LINE1`, and `TLE_LINE2` |
+| `weather.json` | Daily meteorological data for the Beijing area, including temperature, pressure, relative humidity, precipitation, and wind speed |
 
-Tests are optional checks of the link calculations, known results, missing-data handling and download validation. They do not generate the final simulation results or figures.
-python -m unittest discover -s tests -v
+Weather data must cover January 1, 2025, through January 1, 2026, inclusive, indexed by Beijing local dates (`YYYYMMDD`).
 
-Downloading is optional and can be skipped when using the supplied archive. To refresh it, set the SPACETRACK_USER and SPACETRACK_PASS environment variables to your Space-Track credentials, then run:
-python src/download_tle.py
+TLE records can be retrieved from Space-Track. Set the `SPACETRACK_USER` and `SPACETRACK_PASS` environment variables, then run:
 
-Without credentials, the downloader reports a setup message and exits without changing the archive.
+```bash
+python download_tle.py --format json --output input/tle.json
+```
 
-For available options, run:
-python src/simulate.py --help
-python figures/plot.py --help
-python src/download_tle.py --help
+## 3. Running the Simulation
+
+### Full-Year Simulation
+
+```bash
+python simulate.py --archive input/tle.json --weather input/weather.json --output-dir results
+```
+
+### Single-Day Simulation
+
+```bash
+python simulate.py --archive input/tle.json --weather input/weather.json --date 20250101
+```
+
+Single-day mode evaluates the specified UTC date and displays the results without writing output files.
+
+## 4. Output Files
+
+Full-year simulation results are saved in the `results/` directory:
+
+| Output Path | Description |
+|---|---|
+| `daily/` | Daily simulation records in JSON format |
+| `daily.csv` | Consolidated daily simulation results |
+| `summary.json` | Annual summary statistics |
+
+Data volumes are reported in MiB.
+
+## 5. Model Configuration
+
+Link parameters are defined in `link_model.py` and can be adjusted as needed.
+
+For additional command-line options:
+
+```bash
+python simulate.py --help
+python download_tle.py --help
+```
